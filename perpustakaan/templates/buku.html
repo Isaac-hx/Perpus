@@ -1,0 +1,64 @@
+{%extends 'base.html'%}
+
+{% block content %}
+
+    
+    <div class="container">
+        <h1>Daftar Perpustakaan</h1>
+    <a href="{%url 'tambah_buku' %}" class="btn btn-primary">Tambah Buku</a>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>JUDUL</th>
+                            <th>PENULIS</th>
+                            <th>PENERBIT</th>
+                            <th>JUMLAH</th>
+                            <th>KELOMPOK</th>
+                            <th>ACTION</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {%for list_buku in books%}
+                            <tr>
+                                <td><a href="{% url 'ubah_buku' list_buku.id %}">{{list_buku.judul | title}}</a></td>
+                                <td>{{list_buku.penulis | title}}</td>
+                                <td>{{list_buku.penerbit}}</td>
+                                <td>{{list_buku.jumlah}}</td>
+                                <td>{{list_buku.kelompok}}</td>
+                                
+                                <td>
+
+                                    <a href="{% url 'ubah_buku' list_buku.id%}" class="btn btn-success">EDIT</a>
+                                    <button data-toggle="modal" class="btn btn-danger" data-target="#hapus-{{list_buku.id}}">HAPUS</button>
+
+                                
+                                </td>
+                                <div class="modal" id="hapus-{{list_buku.id}}">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <div class="modal-title">
+                                                    <h3>Hapus</h3>
+                                                </div>
+                                            </div>
+                                            <div class="modal-body">
+                                                Apakah anda yakin ingin menghapus <strong>{{list_buku.judul | upper}}</strong>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <a href="{% url 'hapus_buku' list_buku.id%}" class="btn btn-danger">HAPUS</a>
+                                                <button data-dismiss="modal" class="btn btn-dark">TIDAK</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </tr>
+                        {%endfor%}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+{%endblock%}
